@@ -15,8 +15,8 @@ build-backend = "hatchling.build"
 # ]
 
 [project]
-name = "adil-oso"
-version = "0.1.0"
+name = "oso"
+version = "0.27.0"
 description = "Oso aarch64"
 authors = [
     {name = "Adil Naimi", email = "adilnaimi@gmail.com"},
