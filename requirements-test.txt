@@ -1,3 +1,0 @@
-pytest==7.0.1
-dataclasses ; python_version < '3.7'
-sqlalchemy~=1.4.0
