@@ -15,7 +15,6 @@
 #     .
 
 DOCKER_BUILDKIT=1 docker build \
-    --tag oso-aarch64:latest \
     --output . \
     --build-arg="OSO_VERSION=0.27.2" \
     --target runtime \

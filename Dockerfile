@@ -19,12 +19,18 @@ RUN git clone --depth 1 --branch "v$OSO_VERSION" https://github.com/osohq/oso.gi
 WORKDIR /opt/oso
 RUN rm -Rf .git
 RUN make python-build
+RUN make python-test
 WORKDIR /opt/oso/languages/python/oso
 RUN python setup.py bdist_wheel
-
 RUN auditwheel repair dist/*.whl -w wheelhouse/
 
-RUN ls -l /opt/oso/languages/python/oso/wheelhouse
+WORKDIR /opt/oso
+RUN make python-django-build
+RUN make python-django-test
+WORKDIR /opt/oso/languages/python/django-oso
+RUN python setup.py bdist_wheel
+# RUN auditwheel repair dist/*.whl -w wheelhouse/
 
 FROM scratch as runtime
 COPY --from=build /opt/oso/languages/python/oso/wheelhouse/oso-0.27.2-cp312-cp312-manylinux_2_28_aarch64.whl /
+COPY --from=build /opt/oso/languages/python/django-oso/dist/django_oso-0.27.1-py3-none-any.whl /
