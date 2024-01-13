@@ -16,6 +16,6 @@
 
 DOCKER_BUILDKIT=1 docker build \
     --output . \
-    --build-arg="OSO_VERSION=0.27.2" \
+    --build-arg="OSO_VERSION=0.27.3" \
     --target runtime \
     .

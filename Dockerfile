@@ -13,7 +13,7 @@ RUN pip install --upgrade pip setuptools wheel
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-ENV OSO_VERSION=0.27.2
+ARG OSO_VERSION
 WORKDIR /opt
 RUN git clone --depth 1 --branch "v$OSO_VERSION" https://github.com/osohq/oso.git /opt/oso
 WORKDIR /opt/oso
@@ -32,5 +32,6 @@ RUN python setup.py bdist_wheel
 # RUN auditwheel repair dist/*.whl -w wheelhouse/
 
 FROM scratch as runtime
-COPY --from=build /opt/oso/languages/python/oso/wheelhouse/oso-0.27.2-cp312-cp312-manylinux_2_28_aarch64.whl /
+ARG OSO_VERSION
+COPY --from=build /opt/oso/languages/python/oso/wheelhouse/oso-"$OSO_VERSION"-cp312-cp312-manylinux_2_28_aarch64.whl /
 COPY --from=build /opt/oso/languages/python/django-oso/dist/django_oso-0.27.1-py3-none-any.whl /
